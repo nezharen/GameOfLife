@@ -3,11 +3,13 @@
   <head>
     <title>Game of Life</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="jquery.js"></script>
     <script src="game.js"></script>
   </head>
   <body>
     <canvas id="map" width="500" height="500"></canvas>
-    <input type="button" value="随机" onClick="game.random()" />
-    <input type="button" value="开始" onClick="game.start()" />
+    <input id="random" type="button" value="随机" />
+    <input id="start" type="button" value="开始" />
+    <input id="pause" type="button" value="暂停" />
   </body>
 </html>

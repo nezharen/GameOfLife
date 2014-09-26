@@ -1,6 +1,6 @@
 function Game() {
-	this.width = 10;
-	this.height = 10;
+	this.width = 100;
+	this.height = 100;
 	this.map = new Array();
 	for (var i = 0; i < this.width; i++)
 		this.map[i] = new Array();
@@ -24,24 +24,25 @@ function Game() {
 				}
 			}
 		}
+		this.update();
 	}	
 
 	this.start = function() {
 		this.count();
 		this.update();
-		setTimeout("this.start()", 1000);
+		t = setTimeout("game.start()", 100);
 	}
 
 	this.count = function() {
 		var dx = [-1, -1, -1, 0, 0, 1, 1, 1];
 		var dy = [-1, 0, 1, -1, 1, -1, 0, 1];
-		var sum = 0;
 		var tmap = new Array();
 		for (var i = 0; i < this.width; i++)
 			tmap[i] = new Array();
 		for (var i = 1; i < this.width - 1; i++)
 			for (var j = 1; j < this.height - 1; j++)
 			{
+				var sum = 0;
 				for (var k = 0; k < 8; k++)
 					if (this.map[i + dx[k]][j + dy[k]] == 1)
 						sum++;
@@ -62,7 +63,7 @@ function Game() {
 		var c = document.getElementById("map");
 		var cxt =  c.getContext("2d");
 		cxt.clearRect(0, 0, c.width, c.height);
-		var size = 50;
+		var size = 5;
 		for (var i = 1; i < this.width - 1; i++)
 			for (var j = 1; j < this.height - 1; j++) {
 				if (this.map[i][j] == 1)
@@ -74,5 +75,20 @@ function Game() {
 	}
 }
 
-var game = new Game();
+function startGame() {
+	$("#random").attr("disabled", "disabled");
+	game.start();
+}
+
+function pauseGame() {
+	$("#random").removeAttr("disabled");
+	clearTimeout(t);
+}
+
+$(document).ready(function() {
+	game = new Game();
+	$("#start").click(startGame);
+	$("#pause").click(pauseGame);
+	$("#random").click(function () {game.random(0.5)});
+});
 
