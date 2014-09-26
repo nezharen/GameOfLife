@@ -1,23 +1,38 @@
 function Game() {
 	var size = 5;
+	this.started = false;
 	this.width = 100;
 	this.height = 100;
+	//this.intermission = 100;
+	this.density = 0.5;
 	this.map = new Array();
 	for (var i = 0; i < this.width; i++)
 		this.map[i] = new Array();
 
+	//initiate game
 	this.init = function() {
 	for (var i = 0; i < this.width; i++)
 		for (var j = 0; j < this.height; j++)
 			this.map[i][j] = 0;
 	}
 
-	this.random = function(density) {
+	//set evolving velocity of cells
+	this.setCellInterval = function(){
+		this.intermission = $("#intermission")[0].value;
+	}
+
+	//set density of cells
+	this.setDensity = function(){
+		this.density = $("#density")[0].value / 100;
+	}
+
+	//randomize the distribution
+	this.random = function() {
 		this.init();
-		var num = Math.round(this.width * this.height * density);
+		var num = Math.round(this.width * this.height * this.density);
 		while (num > 0){
 			var x = Math.floor(Math.random() * this.width);
-			var y = Math.round(Math.random() * this.height);
+			var y = Math.floor(Math.random() * this.height);
 			if (x > 0 && x < this.width && y > 0 && y < this.height) {
 				if (this.map[x][y] == 0) {
 					this.map[x][y] = 1;
@@ -28,7 +43,10 @@ function Game() {
 		this.update();
 	}	
 
+	//click to add cell
 	this.addCell = function(e){
+		if (game.started == true)
+			return;
 		var offs = $("#canvasWrapper");
 		var x = Math.floor((e.clientX - offs.position().left)/size);
 		var y = Math.floor((e.clientY - offs.position().top)/size);
@@ -36,10 +54,12 @@ function Game() {
 		game.update();
 	}
 
+	//start evolving
 	this.start = function() {
+		this.started = true;
 		this.count();
 		this.update();
-		t = setTimeout("game.start()", 100);
+		t = setTimeout("game.start()", this.intermission);
 	}
 
 	this.count = function() {
@@ -91,12 +111,15 @@ function Game() {
 				cxt.fillRect(size * i, size * j, size * (i + 1), size * (j + 1));
 			}
 	}
+
 }
 
 function startGame() {
 	$("#start").attr("disabled", "disabled");
 	$("#pause").removeAttr("disabled");
 	$("#random").attr("disabled", "disabled");
+	$("#density").attr("disabled", "disabled");
+	$("#interval").attr("disabled", "disabled");
 	game.start();
 }
 
@@ -104,6 +127,9 @@ function pauseGame() {
 	$("#start").removeAttr("disabled");
 	$("#pause").attr("disabled", "disabled");
 	$("#random").removeAttr("disabled");
+	$("#density").removeAttr("disabled");
+	$("#intermission").removeAttr("disabled");
+	game.started = false;
 	clearTimeout(t);
 }
 
@@ -113,8 +139,10 @@ $(document).ready(function() {
 	game.update();
 	$("#start").click(startGame);
 	$("#pause").click(pauseGame);
-	$("#random").click(function () {game.random(0.5)});
+	$("#random").click(function () {game.random()});
 	$("#map").click(game.addCell);
+	$("#intermission").change(function (){game.setCellInterval()});
+	$("#density").change(function (){game.setDensity()});
 	$("#pause").attr("disabled", "disabled");
 });
 
