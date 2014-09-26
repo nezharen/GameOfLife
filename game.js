@@ -1,4 +1,5 @@
 function Game() {
+	var size = 5;
 	this.width = 100;
 	this.height = 100;
 	this.map = new Array();
@@ -26,6 +27,19 @@ function Game() {
 		}
 		this.update();
 	}	
+
+	this.generate = function(){
+		this.init();
+		this.update();
+	}
+
+	this.addCell = function(e){
+		var offs = $("#canvasWrapper");
+		var x = Math.floor((e.clientX - offs.position().left)/size);
+		var y = Math.floor((e.clientY - offs.position().top)/size);
+		game.map[x][y] = 1 - game.map[x][y];
+		game.update();
+	}
 
 	this.start = function() {
 		this.count();
@@ -63,7 +77,6 @@ function Game() {
 		var c = document.getElementById("map");
 		var cxt =  c.getContext("2d");
 		cxt.clearRect(0, 0, c.width, c.height);
-		var size = 5;
 		for (var i = 1; i < this.width - 1; i++)
 			for (var j = 1; j < this.height - 1; j++) {
 				if (this.map[i][j] == 1)
@@ -73,6 +86,9 @@ function Game() {
 				cxt.fillRect(size * i, size * j, size * (i + 1), size * (j + 1));
 			}
 	}
+
+	
+
 }
 
 function startGame() {
@@ -89,6 +105,8 @@ $(document).ready(function() {
 	game = new Game();
 	$("#start").click(startGame);
 	$("#pause").click(pauseGame);
+	$("#generate").click(function (){game.generate()});
 	$("#random").click(function () {game.random(0.5)});
+	document.getElementById('map').addEventListener('click', game.addCell, false);
 });
 
