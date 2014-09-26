@@ -92,11 +92,15 @@ function Game() {
 }
 
 function startGame() {
+	$("#start").attr("disabled", "disabled");
+	$("#pause").removeAttr("disabled");
 	$("#random").attr("disabled", "disabled");
 	game.start();
 }
 
 function pauseGame() {
+	$("#start").removeAttr("disabled");
+	$("#pause").attr("disabled", "disabled");
 	$("#random").removeAttr("disabled");
 	clearTimeout(t);
 }
@@ -108,5 +112,6 @@ $(document).ready(function() {
 	$("#generate").click(function (){game.generate()});
 	$("#random").click(function () {game.random(0.5)});
 	document.getElementById('map').addEventListener('click', game.addCell, false);
+	$("#pause").attr("disabled", "disabled");
 });
 
