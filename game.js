@@ -12,14 +12,14 @@ function Game() {
 			this.map[i][j] = 0;
 	}
 
-	this.random = function(density){
+	this.random = function(density) {
 		this.init();
-		var num = Math.round((this.width - 1) * (this.height - 1) * density);
+		var num = Math.round(this.width * this.height * density);
 		while (num > 0){
-			var x = Math.round(Math.random() * (this.width - 1));
-			var y = Math.round(Math.random() * (this.height - 1));
-			if (x > 0 && x <= this.width-1 && y > 0 && y <= this.height-1){
-				if (this.map[x][y] == 0){
+			var x = Math.floor(Math.random() * this.width);
+			var y = Math.round(Math.random() * this.height);
+			if (x > 0 && x < this.width && y > 0 && y < this.height) {
+				if (this.map[x][y] == 0) {
 					this.map[x][y] = 1;
 					num--;
 				}
@@ -27,11 +27,6 @@ function Game() {
 		}
 		this.update();
 	}	
-
-	this.generate = function(){
-		this.init();
-		this.update();
-	}
 
 	this.addCell = function(e){
 		var offs = $("#canvasWrapper");
@@ -53,13 +48,23 @@ function Game() {
 		var tmap = new Array();
 		for (var i = 0; i < this.width; i++)
 			tmap[i] = new Array();
-		for (var i = 1; i < this.width - 1; i++)
-			for (var j = 1; j < this.height - 1; j++)
-			{
+		for (var i = 0; i < this.width; i++)
+			for (var j = 0; j < this.height; j++) {
 				var sum = 0;
-				for (var k = 0; k < 8; k++)
-					if (this.map[i + dx[k]][j + dy[k]] == 1)
+				for (var k = 0; k < 8; k++) {
+					var tx = i + dx[k];
+					var ty = j + dy[k];
+					if (tx < 0)
+						tx = this.width - 1;
+					if (ty < 0)
+						ty = this.height - 1;
+					if (tx == this.width)
+						tx = 0;
+					if (ty == this.height)
+						ty = 0;
+					if (this.map[tx][ty] == 1)
 						sum++;
+				}
 				if (sum == 3)
 					tmap[i][j] = 1;
 				else
@@ -68,8 +73,8 @@ function Game() {
 					else
 						tmap[i][j] = 0;
 			}
-		for (var i = 1; i < this.width - 1; i++)
-			for (var j = 1; j < this.height - 1; j++)
+		for (var i = 0; i < this.width; i++)
+			for (var j = 0; j < this.height; j++)
 				this.map[i][j] = tmap[i][j];
 	}
 
@@ -77,8 +82,8 @@ function Game() {
 		var c = document.getElementById("map");
 		var cxt =  c.getContext("2d");
 		cxt.clearRect(0, 0, c.width, c.height);
-		for (var i = 1; i < this.width - 1; i++)
-			for (var j = 1; j < this.height - 1; j++) {
+		for (var i = 0; i < this.width; i++)
+			for (var j = 0; j < this.height; j++) {
 				if (this.map[i][j] == 1)
 					cxt.fillStyle = "#FFFFFF";
 				else
@@ -86,9 +91,6 @@ function Game() {
 				cxt.fillRect(size * i, size * j, size * (i + 1), size * (j + 1));
 			}
 	}
-
-	
-
 }
 
 function startGame() {
@@ -107,11 +109,12 @@ function pauseGame() {
 
 $(document).ready(function() {
 	game = new Game();
+	game.init();
+	game.update();
 	$("#start").click(startGame);
 	$("#pause").click(pauseGame);
-	$("#generate").click(function (){game.generate()});
 	$("#random").click(function () {game.random(0.5)});
-	document.getElementById('map').addEventListener('click', game.addCell, false);
+	$("#map").click(game.addCell);
 	$("#pause").attr("disabled", "disabled");
 });
 
