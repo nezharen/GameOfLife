@@ -11,8 +11,20 @@ function Game() {
 			this.map[i][j] = 0;
 	}
 
-	this.random = function() {
-	}
+	this.random = function(density){
+		this.init();
+		var num = Math.round((this.width - 1) * (this.height - 1) * density);
+		while (num > 0){
+			var x = Math.round(Math.random() * (this.width - 1));
+			var y = Math.round(Math.random() * (this.height - 1));
+			if (x > 0 && x <= this.width-1 && y > 0 && y <= this.height-1){
+				if (this.map[x][y] == 0){
+					this.map[x][y] = 1;
+					num--;
+				}
+			}
+		}
+	}	
 
 	this.start = function() {
 		this.count();
