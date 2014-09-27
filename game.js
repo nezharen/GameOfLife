@@ -127,14 +127,11 @@ function Game() {
 		var c = document.getElementById("map");
 		var cxt =  c.getContext("2d");
 		cxt.clearRect(0, 0, c.width, c.height);
+		cxt.fillStyle = "#FFFFFF";
 		for (var i = 0; i < this.width; i++)
-			for (var j = 0; j < this.height; j++) {
+			for (var j = 0; j < this.height; j++)
 				if (this.map[i][j] == 1)
-					cxt.fillStyle = "#FFFFFF";
-				else
-					cxt.fillStyle = "#000000";
-				cxt.fillRect(this.size * i, this.size * j, this.size * (i + 1), this.size * (j + 1));
-			}
+					cxt.fillRect(this.size * i, this.size * j, this.size, this.size);
 	}
 
 }
