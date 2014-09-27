@@ -74,8 +74,8 @@ function Game() {
 		if (game.started == true)
 			return;
 		var offs = $("#map");
-		var x = Math.floor((e.clientX - offs.offset().left)/game.size);
-		var y = Math.floor((e.clientY - offs.offset().top)/game.size);
+		var x = Math.floor((e.pageX - offs.offset().left)/game.size);
+		var y = Math.floor((e.pageY - offs.offset().top)/game.size);
 		game.map[x][y] = 1 - game.map[x][y];
 		game.update();
 	}
