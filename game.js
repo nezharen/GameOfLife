@@ -19,11 +19,13 @@ function Game() {
 	//set evolving velocity of cells
 	this.setCellInterval = function(){
 		this.intermission = $("#intermission")[0].value;
+		$("#intermission-number").text(this.intermission + "ms");
 	}
 
 	//set density of cells
 	this.setDensity = function(){
 		this.density = $("#density")[0].value / 100;
+		$("#density-number").text(Math.round(this.density * 100) + "%");
 	}
 
 	//randomize the distribution
@@ -33,7 +35,7 @@ function Game() {
 		while (num > 0){
 			var x = Math.floor(Math.random() * this.width);
 			var y = Math.floor(Math.random() * this.height);
-			if (x > 0 && x < this.width && y > 0 && y < this.height) {
+			if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
 				if (this.map[x][y] == 0) {
 					this.map[x][y] = 1;
 					num--;
@@ -43,13 +45,18 @@ function Game() {
 		this.update();
 	}	
 
+	this.clear = function() {
+		this.init();
+		this.update();
+	}
+	
 	//click to add cell
-	this.addCell = function(e){
+	this.addCell = function(e) {
 		if (game.started == true)
 			return;
-		var offs = $("#canvasWrapper");
-		var x = Math.floor((e.clientX - offs.position().left)/size);
-		var y = Math.floor((e.clientY - offs.position().top)/size);
+		var offs = $("#map");
+		var x = Math.floor((e.clientX - offs.offset().left)/size);
+		var y = Math.floor((e.clientY - offs.offset().top)/size);
 		game.map[x][y] = 1 - game.map[x][y];
 		game.update();
 	}
@@ -118,8 +125,8 @@ function startGame() {
 	$("#start").attr("disabled", "disabled");
 	$("#pause").removeAttr("disabled");
 	$("#random").attr("disabled", "disabled");
+	$("#clear").attr("disabled", "disabled");
 	$("#density").attr("disabled", "disabled");
-	$("#interval").attr("disabled", "disabled");
 	game.start();
 }
 
@@ -127,19 +134,19 @@ function pauseGame() {
 	$("#start").removeAttr("disabled");
 	$("#pause").attr("disabled", "disabled");
 	$("#random").removeAttr("disabled");
+	$("#clear").removeAttr("disabled");
 	$("#density").removeAttr("disabled");
-	$("#intermission").removeAttr("disabled");
 	game.started = false;
 	clearTimeout(t);
 }
 
 $(document).ready(function() {
 	game = new Game();
-	game.init();
-	game.update();
+	game.clear();
 	$("#start").click(startGame);
 	$("#pause").click(pauseGame);
 	$("#random").click(function () {game.random()});
+	$("#clear").click(function() {game.clear()});
 	$("#map").click(game.addCell);
 	$("#intermission").change(function (){game.setCellInterval()});
 	$("#density").change(function (){game.setDensity()});
