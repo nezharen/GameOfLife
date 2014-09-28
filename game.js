@@ -126,7 +126,7 @@ function Game() {
 				if (this.map[i][j] == 1)
 				{
 					cxt.shadowBlur=3;
-					cxt.shadowColor="black";
+					cxt.shadowColor="white";
 					var circum = this.circumCount(i, j);
 					cxt.fillStyle = "#666666";
 					if (circum >= 6)
