@@ -30,19 +30,12 @@ function Game() {
 		$("#density-number").text($("#density")[0].value + "%");
 	}
 
-	//set width
-	this.setWidth = function() {
-		this.width = $("#horizontal")[0].value;
-		$("#horizontal-number").text(this.width);
-		$("#map").attr("width", this.width * this.size);
-		this.clear();
-	}
-
-	//set height
-	this.setHeight = function() {
-		this.height = $("#vertical")[0].value;
-		$("#vertical-number").text(this.height);
-		$("#map").attr("height", this.height * this.size);
+	//set edge count
+	this.setEdge = function() {
+		this.width = $("#edge")[0].value;
+		this.height = $("#edge")[0].value;
+		$("#edge-number").text(this.width);
+		this.size = 500 / this.width;
 		this.clear();
 	}
 
@@ -141,8 +134,7 @@ function startGame() {
 	$("#pause").removeAttr("disabled");
 	$("#random").attr("disabled", "disabled");
 	$("#clear").attr("disabled", "disabled");
-	$("#horizontal").attr("disabled", "disabled");
-	$("#vertical").attr("disabled", "disabled");
+	$("#edge").attr("disabled", "disabled");
 	$("#density").attr("disabled", "disabled");
 	game.started = true;
 	game.start();
@@ -153,8 +145,7 @@ function pauseGame() {
 	$("#pause").attr("disabled", "disabled");
 	$("#random").removeAttr("disabled");
 	$("#clear").removeAttr("disabled");
-	$("#horizontal").removeAttr("disabled");
-	$("#vertical").removeAttr("disabled");
+	$("#edge").removeAttr("disabled");
 	$("#density").removeAttr("disabled");
 	game.started = false;
 	clearTimeout(t);
@@ -170,8 +161,7 @@ $(document).ready(function() {
 	$("#map").click(game.addCell);
 	$("#intermission").change(function (){game.setCellInterval()});
 	$("#density").change(function (){game.setDensity()});
-	$("#horizontal").change(function() {game.setWidth()});
-	$("#vertical").change(function() {game.setHeight()});
+	$("#edge").change(function() {game.setEdge()});
 	$("#pause").attr("disabled", "disabled");
 });
 
