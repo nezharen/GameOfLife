@@ -127,7 +127,7 @@ function Game() {
 				{
 					cxt.shadowBlur=3;
 					cxt.shadowColor="black";
-					var circum = circumCount(i,j);
+					var circum = this.circumCount(i, j);
 					cxt.fillStyle = "#666666";
 					if (circum >= 6)
 						cxt.fillStyle = "#999999";
@@ -137,6 +137,22 @@ function Game() {
 						cxt.fillStyle = "#ffffff";
 					cxt.fillRect(this.size * i, this.size * j, this.size, this.size);
 				}
+	}
+
+	this.circumCount = function(x, y) {
+		var result = 0;
+		for (var i = -2; i <= 2; i++)
+			for (var j = -2; j <= 2; j++) {
+				if (i == 0 && j == 0)
+					continue;
+				var tx = x  + i;
+				var ty = y  + j;
+				if (tx >= 0 && tx < this.width && ty >= 0 && ty < this.height){
+					if (this.map[tx][ty] == 1)
+						result += 1;
+			}
+		}
+		return result;
 	}
 
 }
@@ -161,22 +177,6 @@ function pauseGame() {
 	$("#density").removeAttr("disabled");
 	game.started = false;
 	clearTimeout(t);
-}
-
-function circumCount(x,y){
-	var result = 0;
-	for (var i = -2; i <= 2; i++)
-		for (var j = -2; j <= 2; j++){
-			if (i == 0 && j == 0)
-				continue;
-			var tx = x  + i;
-			var ty = y  + j;
-			if (tx >= 0 && tx < game.width && ty >= 0 && ty < game.height){
-				if (game.map[tx][ty] == 1)
-					result += 1;
-			}
-		}
-	return result;
 }
 
 $(document).ready(function() {
