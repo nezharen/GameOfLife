@@ -67,8 +67,8 @@ function Game() {
 		if (game.started == true)
 			return;
 		var offs = $("#map");
-		var x = Math.floor((e.pageX - offs.offset().left)/game.size);
-		var y = Math.floor((e.pageY - offs.offset().top)/game.size);
+		var x = Math.floor((e.pageX - offs.offset().left - 5)/game.size);
+		var y = Math.floor((e.pageY - offs.offset().top - 5)/game.size);
 		game.map[x][y] = 1 - game.map[x][y];
 		game.update();
 	}
