@@ -36,7 +36,7 @@ function Game() {
 		this.height = $("#edge")[0].value;
 		$("#edge-number").text(this.width);
 		this.size = 500 / this.width;
-		this.clear();
+		game.clear();
 	}
 
 	//randomize the distribution
@@ -120,11 +120,22 @@ function Game() {
 		var c = document.getElementById("map");
 		var cxt =  c.getContext("2d");
 		cxt.clearRect(0, 0, c.width, c.height);
-		cxt.fillStyle = "#FFFFFF";
+		
 		for (var i = 0; i < this.width; i++)
 			for (var j = 0; j < this.height; j++)
 				if (this.map[i][j] == 1)
+				{
+					cxt.fillStyle = "#B5DBF4";
+					var circum = circumCount(i,j);
+					cxt.fillStyle = "#A7D3F1";
+					if (circum >= 6)
+						cxt.fillStyle = "#7ABEEB";
+					if (circum >= 12)
+						cxt.fillStyle = "#5DAFE6";
+					if (circum >= 18)
+						cxt.fillStyle = "#2292DD";
 					cxt.fillRect(this.size * i, this.size * j, this.size, this.size);
+				}
 	}
 
 }
@@ -149,6 +160,22 @@ function pauseGame() {
 	$("#density").removeAttr("disabled");
 	game.started = false;
 	clearTimeout(t);
+}
+
+function circumCount(x,y){
+	var result = 0;
+	for (var i = -2; i <= 2; i++)
+		for (var j = -2; j <= 2; j++){
+			if (i == 0 && j == 0)
+				continue;
+			var tx = x  + i;
+			var ty = y  + j;
+			if (tx >= 0 && tx < game.width && ty >= 0 && ty < game.height){
+				if (game.map[tx][ty] == 1)
+					result += 1;
+			}
+		}
+	return result;
 }
 
 $(document).ready(function() {

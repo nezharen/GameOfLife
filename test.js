@@ -38,6 +38,7 @@ function tCount(dense){
 	return check(game);	
 }
 
+// test: special data
 function tSpecial(){
 	var game = new Game();
 	game.init();
@@ -47,6 +48,7 @@ function tSpecial(){
 	return result;
 }
 
+// check the status of game
 function check(game){
 	var dx = [-1, -1, -1, 0, 0, 1, 1, 1];
 	var dy = [-1, 0, 1, -1, 1, -1, 0, 1];
