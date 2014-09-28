@@ -12,7 +12,7 @@
     <script src="bootstrap.min.js"></script>
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="position:absolute;">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,51 +23,54 @@
           </button>
           <a class="navbar-brand" href="#">Game of Life</a>
         </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="qunit.html">单元测试</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="container">
       <div class="starter-template">
-        <div>
-          <canvas id="map" width="500" height="500" style="background:#000000;border-style:solid;border-width:5px;border-color:#505050"></canvas>
+        <div class="row">
+          <div class="col-md-6">
+            <canvas id="map" width="500" height="500" style="background:#000000;border-style:solid;border-width:5px;border-color:#505050"></canvas>
+          </div>
+          <div class="col-md-6">
+            <form role="form">
+              <div class="form-group">
+                <div style="font-family: cursive;font-size:3em;padding-bottom:10px">
+                  Options
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4"><lable for="edge">每边细胞个数：</lable></div>
+                  <div class="col-md-6"><input id="edge" type="range" min="10" max="150" value="100" /></div>
+                  <div class="col-md-2"><lable id="edge-number">100</lable></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4"><lable for="density">细胞密度：</lable></div>
+                  <div class="col-md-6"><input id="density" type="range" min="0" max="100" value="50" /></div>
+                  <div class="col-md-2"><lable id="density-number">50%</lable></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4"><lable for="intermission">繁衍周期：</lable></div>
+                  <div class="col-md-6"><input id="intermission" type="range" min="10" max="1000" value="100" /></div>
+                  <div class="col-md-2"><lable id="intermission-number">100ms</lable></div>
+                </div>
+              </div>
+              <input id="random" class="btn btn-default" type="button" value="随机" />
+              <input id="clear" class="btn btn-default" type="button" value="清空" />
+              <input id="start" class="btn btn-default"  type="button" value="开始" />
+              <input id="pause" class="btn btn-default"  type="button" value="暂停" />
+            </form>
+          </div>
         </div>
-        <form role="form" style="padding:30px;font-family:Microsoft YaHei">
-          <div class="form-group">
-            <div class="row" style="color:#5DAFE6;font-family: cursive;font-size:3em;padding-bottom:10px;border-top:2px solid #eee">
-              Options
-            </div>
-          </div>
-           <div class="form-group">
-            <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-2"><lable for="edge">每边细胞个数：</lable></div>
-              <div class="col-md-3"><input id="edge" type="range" min="10" max="150" value="100" /></div>
-              <div class="col-md-1"><lable id="edge-number">100</lable></div>
-              <div class="col-md-3"></div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-2"><lable for="density">细胞密度：</lable></div>
-              <div class="col-md-3"><input id="density" type="range" min="0" max="100" value="50" /></div>
-              <div class="col-md-1"><lable id="density-number">50%</lable></div>
-              <div class="col-md-3"></div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-2"><lable for="intermission">繁衍周期：</lable></div>
-              <div class="col-md-3"><input id="intermission" type="range" min="10" max="1000" value="100" /></div>
-              <div class="col-md-1"><lable id="intermission-number">100ms</lable></div>
-              <div class="col-md-3"></div>
-            </div>
-          </div>
-          <input id="random" class="btn btn-default" type="button" value="随机" />
-          <input id="clear" class="btn btn-default" type="button" value="清空" />
-          <input id="start" class="btn btn-default"  type="button" value="开始" />
-          <input id="pause" class="btn btn-default"  type="button" value="暂停" />
-        </form>
       </div>
     </div>
   </body>
