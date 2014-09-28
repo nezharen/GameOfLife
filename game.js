@@ -127,15 +127,14 @@ function Game() {
 				{
 					cxt.shadowBlur=3;
 					cxt.shadowColor="black";
-					cxt.fillStyle = "#B5DBF4";
 					var circum = circumCount(i,j);
-					cxt.fillStyle = "#A7D3F1";
+					cxt.fillStyle = "#666666";
 					if (circum >= 6)
-						cxt.fillStyle = "#7ABEEB";
+						cxt.fillStyle = "#999999";
 					if (circum >= 12)
-						cxt.fillStyle = "#5DAFE6";
+						cxt.fillStyle = "#cccccc";
 					if (circum >= 18)
-						cxt.fillStyle = "#2292DD";
+						cxt.fillStyle = "#ffffff";
 					cxt.fillRect(this.size * i, this.size * j, this.size, this.size);
 				}
 	}

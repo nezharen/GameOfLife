@@ -28,14 +28,14 @@
     <div class="container">
       <div class="starter-template">
         <div>
-          <canvas id="map" width="500" height="500" style="background:#F2FBFB;box-shadow: 2px 2px 2px 2px #888888"></canvas>
+          <canvas id="map" width="500" height="500" style="background:#000000;border-style:solid;border-width:5px;border-color:#505050"></canvas>
         </div>
         <form role="form" style="">
            <div class="form-group">
             <div class="row">
               <div class="col-md-3"></div>
               <div class="col-md-2"><lable for="edge">每边细胞个数：</lable></div>
-              <div class="col-md-3"><input id="edge" type="range" min="10" max="200" value="100" /></div>
+              <div class="col-md-3"><input id="edge" type="range" min="10" max="150" value="100" /></div>
               <div class="col-md-1"><lable id="edge-number">100</lable></div>
               <div class="col-md-3"></div>
             </div>
@@ -52,14 +52,14 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-3"></div>
-              <div class="col-md-2"><lable for="intermission">变化间隔：</lable></div>
+              <div class="col-md-2"><lable for="intermission">繁衍周期：</lable></div>
               <div class="col-md-3"><input id="intermission" type="range" min="10" max="1000" value="100" /></div>
               <div class="col-md-1"><lable id="intermission-number">100ms</lable></div>
               <div class="col-md-3"></div>
             </div>
           </div>
           <input id="random" class="btn btn-default" type="button" value="随机" />
-          <input id="clear" class="btn btn-default" type="button" value="清屏" />
+          <input id="clear" class="btn btn-default" type="button" value="清空" />
           <input id="start" class="btn btn-default"  type="button" value="开始" />
           <input id="pause" class="btn btn-default"  type="button" value="暂停" />
         </form>
