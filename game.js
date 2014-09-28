@@ -120,11 +120,13 @@ function Game() {
 		var c = document.getElementById("map");
 		var cxt =  c.getContext("2d");
 		cxt.clearRect(0, 0, c.width, c.height);
-		
+
 		for (var i = 0; i < this.width; i++)
 			for (var j = 0; j < this.height; j++)
 				if (this.map[i][j] == 1)
 				{
+					cxt.shadowBlur=3;
+					cxt.shadowColor="black";
 					cxt.fillStyle = "#B5DBF4";
 					var circum = circumCount(i,j);
 					cxt.fillStyle = "#A7D3F1";
